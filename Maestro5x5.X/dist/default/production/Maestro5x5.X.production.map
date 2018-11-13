@@ -1,0 +1,173 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Tue Nov 13 00:08:13 2018
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000001    program   0x000004
+                   .org_1       code   0x000004    program   0x0003f4
+                   .cinit    romdata   0x0001fe    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/JUEGO5X       code   0x002007    program   0x000002
+.config_2008_BUILD/DEFAULT/PRODUCTION/JUEGO5X       code   0x002008    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000001    0x000002      
+                            0x000004    0x0001ff      
+                            0x002007    0x002008      
+            512 out of 8455 program addresses used, program memory utilization is 6%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    BSTOP   0x000194    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+               BYTE_WRITE   0x00019f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+              CHECK_FIL_0   0x0000ac    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_1   0x0000af    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_2   0x0000b2    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_3   0x0000b5    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_4   0x0000b8    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                CHECK_ROW   0x0000ab    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                CONFIGURA   0x0000e8    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+               CONFIG_PWM   0x0001bb    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+              CONVERT_HEX   0x000019    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              DISABLE_PWM   0x0001cd    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                 ENCENDER   0x00008b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+          END_CONVERT_HEX   0x000033    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  END_FIL   0x0000bb    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+         END_RESPUESTAS_1   0x00004d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+         END_ROTACIONPTOC   0x000019    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  ESCLAVO   0x00011f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                     ESTO   0x000152    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                    GUSA1   0x000139    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                    GUSA2   0x000143    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                     GUSS   0x00014c    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+          I2C_INIT_MASTER   0x00015e    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+           I2C_INIT_SLAVE   0x00016e    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+         I2C_START_MASTER   0x00017d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                   INICIA   0x000066    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 INIT_FRQ   0x0001a7    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                 INIT_PWM   0x0001c8    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+               KeyRelease   0x000113    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                LOAD_FREQ   0x0001d1    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                NECESARIO   0x000153    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  OFFSETR   0x000076    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              PREND_RESPU   0x000091    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  PROGRAM   0x000005    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  PROXIMO   0x000073    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 READ_HEX   0x000098    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             READ_HEX_END   0x00009c    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             RESPUESTAS_1   0x000033    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             RETARDO_20MS   0x000125    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+       RETARDO_NOTAS_20MS   0x0001d5    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+             ROTACIONPTOC   0x000013    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+               SAVE_VALUE   0x0000c4    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 SIGCURSO   0x0000d6    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 SISTPREG   0x000070    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+         ServiceInterrupt   0x000007    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             ServiceWakup   0x00000a    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+           TECLA_NO_PULSE   0x0000c3    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                TONOBUENO   0x0001e0    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                TONOERROR   0x0001a7    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                       TX   0x000188    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+ Teclado_EsperaDejePulsar   0x00009d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+    Teclado_LeeOrdenTecla   0x0000a4    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+   Teclado_SigueEsperando   0x00009d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+          VALIDATE_ANSWER   0x0000c8    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 VERIFICA   0x000081    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                VERIFICA1   0x000079    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             _.org_1_00E3   0x0000e3    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             _.org_1_012B   0x00012b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             _.org_1_012D   0x00012d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             _.org_1_0192   0x000192    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+             _.org_1_01DC   0x0001dc    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+             _.org_1_01DE   0x0001de    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+               bstop_wait   0x00019c    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                  gusanos   0x00012f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+           i2c_start_wait   0x000185    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                  rettkla   0x0000dc    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 tklbuena   0x0000ce    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  tklmala   0x0000e5    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  tx_wait   0x00018d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  PROGRAM   0x000005    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+         ServiceInterrupt   0x000007    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             ServiceWakup   0x00000a    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             ROTACIONPTOC   0x000013    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+         END_ROTACIONPTOC   0x000019    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CONVERT_HEX   0x000019    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             RESPUESTAS_1   0x000033    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+          END_CONVERT_HEX   0x000033    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+         END_RESPUESTAS_1   0x00004d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                   INICIA   0x000066    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 SISTPREG   0x000070    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  PROXIMO   0x000073    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  OFFSETR   0x000076    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                VERIFICA1   0x000079    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 VERIFICA   0x000081    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 ENCENDER   0x00008b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              PREND_RESPU   0x000091    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 READ_HEX   0x000098    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             READ_HEX_END   0x00009c    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+ Teclado_EsperaDejePulsar   0x00009d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+   Teclado_SigueEsperando   0x00009d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+    Teclado_LeeOrdenTecla   0x0000a4    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                CHECK_ROW   0x0000ab    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_0   0x0000ac    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_1   0x0000af    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_2   0x0000b2    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_3   0x0000b5    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+              CHECK_FIL_4   0x0000b8    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  END_FIL   0x0000bb    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+           TECLA_NO_PULSE   0x0000c3    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+               SAVE_VALUE   0x0000c4    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+          VALIDATE_ANSWER   0x0000c8    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 tklbuena   0x0000ce    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                 SIGCURSO   0x0000d6    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  rettkla   0x0000dc    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             _.org_1_00E3   0x0000e3    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  tklmala   0x0000e5    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                CONFIGURA   0x0000e8    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+               KeyRelease   0x000113    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  ESCLAVO   0x00011f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             RETARDO_20MS   0x000125    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             _.org_1_012B   0x00012b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+             _.org_1_012D   0x00012d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                  gusanos   0x00012f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                    GUSA1   0x000139    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                    GUSA2   0x000143    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                     GUSS   0x00014c    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                     ESTO   0x000152    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+                NECESARIO   0x000153    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\Juego5x5_Maestro.asm
+          I2C_INIT_MASTER   0x00015e    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+           I2C_INIT_SLAVE   0x00016e    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+         I2C_START_MASTER   0x00017d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+           i2c_start_wait   0x000185    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                       TX   0x000188    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                  tx_wait   0x00018d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+             _.org_1_0192   0x000192    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                    BSTOP   0x000194    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+               bstop_wait   0x00019c    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+               BYTE_WRITE   0x00019f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                TONOERROR   0x0001a7    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                 INIT_FRQ   0x0001a7    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+               CONFIG_PWM   0x0001bb    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                 INIT_PWM   0x0001c8    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+              DISABLE_PWM   0x0001cd    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                LOAD_FREQ   0x0001d1    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+       RETARDO_NOTAS_20MS   0x0001d5    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+             _.org_1_01DC   0x0001dc    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+             _.org_1_01DE   0x0001de    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+                TONOBUENO   0x0001e0    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Maestro5x5.X\I2C.INC
+
+

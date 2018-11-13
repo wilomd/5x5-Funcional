@@ -1,0 +1,1735 @@
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ; FORMATO DEL PANEL
+                      00002 ;                    0   1   2   3   4 bits puertoB
+                      00003 ;0      A   a        1,  2,  3,  4,  5  
+                      00004 ;1      B   b        6,  7,  8,  9, 10
+                      00005 ;2      C   c       11, 12, 13, 14, 15
+                      00006 ;3      D   d       16, 17, 18, 19, 20      
+                      00007 ;4      E   e       21, 22, 23, 24, 25
+                      00008 ;puerto c       
+                      00009         
+                      00010 ; 1ra columna Animales solo bombillos 
+                      00011 ; 2da Columna Preguntas solo bombillos
+                      00012 ; 25 bombillos no manejables en este programa por los momentos
+                      00013 ; 25 pulsadores panel de Respuesta del teclado matricial
+                      00014 ; 1 Pulsador de inicio del Sistema      
+                      00015 ; 1 Salida de Audio para los Tonos (de acierto o respuesta Errada)
+                      00016 ; comunicacion con un expansor de puertos o otro pic16f887
+                      00017 ; Utilizando los bits 0, 1, 3, 4, 5 para encender los bombillos de los animales
+                      00018         
+                      00019 ;COMO CONECTAR:
+                      00020 ; PUERTO A:
+                      00021         ;
+                      00022         
+                      00023 
+                      00024 ;$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$            
+                      00025         List p=16f887
+                      00026         #include <p16f887.inc>
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Sep 19 2018
+                      00005 ;  MPASM PIC16F887 processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2018 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00810         LIST
+                      00027         
+2007   20F4           00028         __CONFIG H'2007', H'3FFC' & H'3FF7' & H'3FFF' & H'3FFF' & H'3FFF' & H'3FFF' & H'3CFF' & H'3BFF' 
+                            & H'37FF' & H'2FFF' & H'3FFF'
+2008   3EFF           00029         __CONFIG H'2008', H'3EFF' & H'3FFF'     
+                      00030 ;===============================================================================
+                      00031         ;                VARIABLES DEL PROGRAMA
+                      00032 ;===============================================================================        
+  00000020            00033 CONTA_2     EQU 0x20
+  00000021            00034 CONTA_1     EQU 0x21
+  00000022            00035 BIT         EQU 0x22
+  00000023            00036 TECLA       EQU 0x23
+  00000024            00037 LAST_TECLA  EQU 0x24
+  00000025            00038 RESPUESTA   EQU 0x25
+  00000026            00039 CORRECTO    EQU 0x26
+  00000027            00040 CONT_WIN    EQU 0x27
+  00000028            00041 TEMP0       EQU 0X28
+  00000029            00042 TEMP1       EQU 0X29
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00043 
+  00000030            00044 ANIMALES    EQU 0X30
+  00000031            00045 PREGUNTA    EQU 0X31
+  00000032            00046 TEMP        EQU 0X32
+  00000033            00047 CONTPRGTA   EQU 0X33        
+  00000034            00048 PUERTOD     EQU 0X34
+                      00049             
+  00000035            00050 CONTAFIL    EQU 0X35
+  00000036            00051 CONTACOL    EQU 0X36
+                      00052     
+  00000037            00053 ACTVTKLA    EQU 0X37
+                      00054     
+  00000038            00055 NVECES      EQU 0X38
+  00000039            00056 FILNUM      EQU 0X39
+                      00057             
+  00000040            00058 ACTVSW      EQU 0X40
+  00000041            00059 CONTA_3     EQU 0X41
+  00000042            00060 PREGTFIL    EQU 0X42        
+  00000043            00061 temp        EQU 0X43 
+  00000044            00062 GUSAS       EQU 0X44
+  00000045            00063 ANIUNO      EQU 0X45
+  00000046            00064 PREUNO      EQU 0X46
+  00000047            00065 DATO4       EQU 0X47        
+                      00066 ;===============================================================================
+                      00067 ;                           Definicion de las macros
+                      00068 ;===============================================================================
+                      00069 BANK0   MACRO
+                      00070         BCF STATUS,5
+                      00071         BCF STATUS,6
+                      00072         ENDM
+                      00073 BANK1   MACRO
+                      00074         BSF STATUS,5
+                      00075         BCF STATUS,6
+                      00076         ENDM
+                      00077 BANK2   MACRO
+                      00078         BCF STATUS,5
+                      00079         BSF STATUS,6
+                      00080         ENDM
+                      00081 BANK3   MACRO
+                      00082         BSF STATUS,5
+                      00083         BSF STATUS,6
+                      00084         ENDM
+                      00085         
+                      00086 ClSPort MACRO
+                      00087         BANK0
+                      00088         CLRF PORTC
+                      00089         CLRF PORTB
+                      00090         CLRF PORTA
+                      00091         CLRF PORTD
+                      00092         MOVLW 0X04
+                      00093         MOVWF PORTE
+                      00094         ENDM
+                      00095         
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00096 DigPort MACRO
+                      00097         BANK3
+                      00098         CLRF ANSEL
+                      00099         CLRF ANSELH
+                      00100         ENDM        
+                      00101 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      00102 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      00103 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      00104 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%            
+                      00105         ORG H'01'
+0001   2???           00106         CALL CONFIGURA
+0002   2???           00107         GOTO PROGRAM    ;INICIA BAJO CONSUMO SLEEP
+                      00108         
+                      00109         ORG 04H
+0004   2???           00110         goto ServiceInterrupt
+                      00111 ;===============================================================================                    
+                      00112 ;       inicia el programa en bajo consumo hasta la Interrupcion
+                      00113 ;===============================================================================        
+0005                  00114 PROGRAM
+0005   0063           00115         sleep       ;Despierta el programa con la Int
+0006   2???           00116         goto PROGRAM                    
+                      00117 ;===============================================================================
+0007                  00118 ServiceInterrupt
+                      00119 ;===============================================================================        
+0007   180B           00120         btfsc INTCON,RBIF       ;change on rb int?
+0008   2???           00121         goto ServiceWakup       ;yes then service 
+0009   2???           00122         goto gusanos            ; Int por Timer de los 5 Minutos para Gusano
+                      00123 ;===============================================================================        
+000A                  00124 ServiceWakup
+                      00125 ;===============================================================================        
+000A   118B           00126         BCF     INTCON,RBIE     ;clear mask
+000B   0906           00127         comf    PORTB,W
+000C   100B           00128         BCF     INTCON,RBIF
+000D   3980           00129         andlw   80h             ;Mascara para verificar 7 bit en Pto.B
+000E   00C3           00130         MOVWF   temp    
+000F   0843           00131         MOVF    temp,w
+0010   1BC3           00132         BTFSC   temp,7          ;Pregunta si se pulso en boton de Inicio Juego
+0011   2???           00133         GOTO    INICIA  
+0012   2???           00134         GOTO    INICIA
+                      00135 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      00136 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      00137 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      00138 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+                      00139                 
+                      00140 ;===============================================================================        
+                      00141 ; 0 1 X X X 5 6 7
+0013                  00142 ROTACIONPTOC
+0013   0782           00143         ADDWF PCL,F
+0014   34E2 34E1      00144         DT B'11100010', B'11100001'
+0016   34C3 34A3      00145         DT B'11000011', B'10100011'
+0018   3463           00146         DT B'01100011'   
+0019                  00147 END_ROTACIONPTOC        
+                      00148 ;===============================================================================                
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0019                  00149 CONVERT_HEX
+0019   0782           00150         ADDWF PCL,F
+001A   3400 3401 3402 00151         DT  .0,  .1,  .2,  .3,  .4
+       3403 3404 
+001F   3405 3406 3407 00152         DT  .5,  .6,  .7,  .8,  .9
+       3408 3409 
+0024   340A 340B 340C 00153         DT .10, .11, .12, .13, .14
+       340D 340E 
+0029   340F 3410 3411 00154         DT .15, .16, .17, .18, .19
+       3412 3413 
+002E   3414 3415 3416 00155         DT .20, .21, .22, .23, .24
+       3417 3418 
+0033                  00156 END_CONVERT_HEX
+                      00157 ;===============================================================================        
+0033                  00158 RESPUESTAS_1 
+0033   0782           00159         ADDWF PCL,F
+                      00160         
+                      00161 ; ANIMAL1                       
+0034   3404 3409 340E 00162         DT  .4,  .9,  .14, .19,  .24  ;Probar con estas respuestas solamente
+       3413 3418 
+                      00163 ; ANIMAL2
+0039   3400 3400 3400 00164         DT  .0,  .0,  .0,  .0,  .0
+       3400 3400 
+                      00165 ; ANIMAL3       
+003E   3400 3400 3400 00166         DT  .0,  .0,  .0,  .0,  .0
+       3400 3400 
+                      00167 ; ANIMAL4       
+0043   3400 3400 3400 00168         DT  .0,  .0,  .0,  .0,  .0
+       3400 3400 
+                      00169 ; ANIMAL5       
+0048   3400 3400 3400 00170         DT  .0,  .0,  .0,  .0,  .0
+       3400 3400 
+004D                  00171 END_RESPUESTAS_1
+                      00172 ;===============================================================================
+004D   3400 3401 3402 00173         DT  .0,  .1,  .2,  .3,  .4
+       3403 3404 
+0052   3405 3406 3407 00174         DT  .5,  .6,  .7,  .8,  .9
+       3408 3409 
+0057   340A 340B 340C 00175         DT .10, .11, .12, .13, .14
+       340D 340E 
+005C   340F 3410 3411 00176         DT .15, .16, .17, .18, .19
+       3412 3413 
+0061   3414 3415 3416 00177         DT .20, .21, .22, .23, .24
+       3417 3418 
+                      00178 ;============================================================================== 
+                      00179 ;==============================================================================
+                      00180 ;==============================================================================
+                      00181 ;                       inicia el programa      
+0066                  00182 INICIA
+                      00183 ;============================================================================== 
+                      00184         BANK1
+0066   1683               M         BSF STATUS,5
+0067   1303               M         BCF STATUS,6
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0068   1396           00185         BCF IOCB,7          ; SE DESABILITA LA TECLA DE INICIO COMO INT
+                      00186         BANK0
+0069   1283               M         BCF STATUS,5
+006A   1303               M         BCF STATUS,6
+006B   1489           00187         BSF PORTE,1
+                      00188 ;============================================================================== 
+006C   2???           00189         CALL gusanos
+                      00190         BANK0
+006D   1283               M         BCF STATUS,5
+006E   1303               M         BCF STATUS,6
+006F   2???           00191         CALL ENCENDER
+0070                  00192 SISTPREG
+0070   2???           00193         CALL RETARDO_20MS               ;sistema de preguntas y respuestas
+0071   2???           00194         CALL Teclado_LeeOrdenTecla      ;ESPERA HASTA QUE SE PULSE UNA TECLA
+0072   2???           00195         CALL RETARDO_20MS               ;REPITE HASTA QUE SE PULSE LA TECLA 
+                      00196                                         ;CORRECTA PARA AVANZAR A LA SIGUIENTE
+0073                  00197 PROXIMO                                 ;PREGUNTA
+0073   0186           00198         CLRF PORTB                              
+0074   2???           00199         CALL VERIFICA1  ;SIGUIENTE PREGUNTA Y/O ANIMAL
+                      00200                         ;PREGUNTA SI ES EL FINAL DEL CONTADOR DE LAS PREGUNTAS 
+                      00201                         ;EN CASO DE NO SER REPITE BUCLE PARA LA PROXIMA PREGUNTA
+0075   2???           00202         GOTO SISTPREG
+                      00203 
+                      00204         ;USO DEL PERRO GUARDIAN PARA REINICIAR EL PROGRAMA EN CASO DE FALLA
+                      00205         
+                      00206 ;===============================================================================
+                      00207 ;                       RUTINAS USADAS EN EL SOFTWARE
+                      00208 ;===============================================================================
+                      00209             
+                      00210   
+                      00211         
+                      00212         
+                      00213    
+                      00214 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                      00215 ; esta trabajando cada fila es un animal y las columnas corresponden al valor   
+                      00216 ; numerico de c/u de las 5 respuestas correspondientes del animal, en el ejemplo
+                      00217 ; se ve las posiciones de las respuestas de la matriz principal. solo esta primer
+                      00218 ; animal con sus 5 posibles respuestas. 
+                      00219         
+                      00220         
+                      00221 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+                      00222 ;                   inicio de las Rutinas (call)
+                      00223 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                
+                      00224 
+                      00225 
+                      00226 ;===============================================================================
+                      00227 ; Calcula el OffSet, para calcular el desplazamiento en la matriz de respuesta y
+                      00228 ; luego verificar si la respuesta es valida, si es correcta continuara el proceso
+                      00229 ; en caso de no ser la respuesta se quedara esperando que sea oprimida la correcta
+                      00230 ;debe llevar un contador para que realice este proceso N veces si nadie sigue con
+                      00231 ;el juego debe reiniciarse y esperar a ser pulsado el inicio
+                      00232 ;===============================================================================
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0076                  00233 OFFSETR
+0076   0845           00234         MOVF ANIUNO,W    ; SE DESPLAZARA EN LA TABLA SEGUN ANIMAL Y PREGUNTA
+0077   0746           00235         ADDWF PREUNO,W   ; Y VERIFICA SI LA TECLA PULSADA ES LA RESPUESTA
+0078   0008           00236         RETURN
+                      00237                            
+                      00238                            
+                      00239 ;===============================================================================
+                      00240 ;       RUTINA DE ENCENDER LA SECUENCIA DE LUCES DE ANIMALES y PREGUNTAS
+                      00241 ;       USANDO 5 BITS PUERTO A y D                  
+0079                  00242 VERIFICA1   
+                      00243 ;===============================================================================
+0079   1003           00244         BCF  STATUS,C
+007A   0DB1           00245         RLF  PREGUNTA,F     ; ROTA A LA IZQUIERDA BIT PRENDER BOMBILLO 
+007B   0831           00246         MOVF PREGUNTA,W     ; INICIA PREGUNTA PARA SABER SI LLEGO AL FIN
+007C   3C20           00247         SUBLW 20H           ; SI EL BIT 5 ESTA ACTIVO REINICIA PROGRAMA
+007D   1D03           00248         BTFSS STATUS,Z
+007E   2???           00249         GOTO ENCENDER
+007F   3001           00250         MOVLW .1            ;inicializa las preguntas para proximo animal
+0080   00B1           00251         MOVWF PREGUNTA
+                      00252 ;==============================================================================             
+0081                  00253 VERIFICA
+                      00254 ;============================================================================== 
+0081   1003           00255         BCF  STATUS,C
+0082   0DB0           00256         RLF  ANIMALES,F     ; ROTA A LA IZQUIERDA BIT PRENDER BOMBILLO 
+0083   0830           00257         MOVF ANIMALES,W     ; INICIA PREGUNTA PARA SABER SI LLEGO AL FIN
+0084   3C20           00258         SUBLW 20H           ; SI EL BIT 5 ESTA ACTIVO REINICIA PROGRAMA
+0085   1D03           00259         BTFSS STATUS,Z
+0086   2???           00260         GOTO ENCENDER
+0087   3001           00261         MOVLW .1            ;inicializa las preguntas para proximo animal
+0088   00B0           00262         MOVWF ANIMALES
+0089   2???           00263         CALL gusanos
+008A   2???           00264         GOTO KeyRelease
+                      00265 ;==============================================================================
+008B                  00266 ENCENDER
+                      00267 ;============================================================================== 
+008B   0831           00268         MOVF    PREGUNTA,W
+008C   0088           00269         MOVWF   PORTD
+008D   2???           00270         CALL PREND_RESPU
+008E   0830           00271         MOVF    ANIMALES,W 
+008F   0085           00272         MOVWF   PORTA
+0090   0008           00273         RETURN
+                      00274         
+0091                  00275 PREND_RESPU
+0091   0846           00276         MOVF    PREUNO,W
+0092   3E50           00277         ADDLW   50H                 ; se debe sumar 40h al valor de la fila para la rutina
+0093   00A3           00278         MOVWF   TECLA       ;SE CARGA EL VALOR DE LA FILA A ENCENDER EN LA MATRIZ
+0094   0080           00279         MOVWF DataOutput
+0095   2???           00280         CALL  ESCLAVO
+0096   2???           00281         CALL  RETARDO_20MS      
+0097   0008           00282         RETURN
+                      00283         
+                      00284 ;==============================================================================
+                      00285 ;                       LEER EL VALOR EN TECLADO 5x5
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00286 ; asigna un valor a la tecla pulsada entre 1 y 25 con la tabla CONVERT_HEX
+                      00287 ;==============================================================================
+0098                  00288 READ_HEX
+0098   1C03           00289         BTFSS STATUS,C
+0099   2???           00290         GOTO READ_HEX_END
+009A   2???           00291         CALL CONVERT_HEX
+009B   1403           00292         BSF STATUS,C
+009C                  00293 READ_HEX_END
+009C   0008           00294         RETURN
+                      00295 ;============================================================================== 
+                      00296 ;===============================================================================
+                      00297 ;                      ANTIREBOTE PARA LOS PULSADORES
+                      00298 ;===============================================================================
+009D                  00299 Teclado_EsperaDejePulsar
+                      00300 ;       BANK0
+                      00301 ;       MOVLW 0x1F
+                      00302 ;       MOVWF PORTB
+                      00303         
+009D                  00304 Teclado_SigueEsperando
+009D   2???           00305         CALL RETARDO_20MS
+                      00306 
+009E   0806           00307         MOVF PORTB,W
+009F   3C1F           00308         SUBLW 0x1F      
+                      00309 
+00A0   1D03           00310         BTFSS STATUS,Z
+00A1   2???           00311         GOTO Teclado_SigueEsperando
+00A2   0187           00312         CLRF PORTC
+00A3   0008           00313         RETURN
+                      00314 ;===============================================================================
+                      00315 ; LEE SI SE PULSO UNA TECLAS EN SELECION DE LA RESPUESTA, Y VERIFICA CUAL DE LAS 
+                      00316 ;25 TECLAS FUE PULSADA PARA COMPARAR CON SU RESPUESTA.
+                      00317         
+                      00318 ;PENDIENTE;     
+                      00319 ;CON EL PUERTO B EN PULL UP AL PRESIONAR EL PULSADOR SE DEBE LEER UNA CERO LOGICO
+                      00320 ;===============================================================================
+                      00321 ;TECLA      EQU 0x23
+                      00322         
+00A4                  00323 Teclado_LeeOrdenTecla      
+                      00324         BANK0
+00A4   1283               M         BCF STATUS,5
+00A5   1303               M         BCF STATUS,6
+00A6   2???           00325         CALL PREND_RESPU
+00A7   3000           00326         MOVLW .0
+00A8   00A3           00327         MOVWF TECLA
+00A9   00C0           00328         MOVWF ACTVSW
+00AA   0837           00329         MOVF ACTVTKLA,W     ; PRIMERA COLUMNA CON CERO PARA MATRIZ DEL TECLADO
+                      00330                             ; B'11111010' 0FAH VALOR ENVIADO POR LA FILA
+                      00331                             ; por el pull up se activa con cero logico
+00AB                  00332 CHECK_ROW
+00AB   0087           00333         MOVWF PORTC         ;ENVIA EL VALOR DE W POR EL PUERTO
+00AC                  00334 CHECK_FIL_0
+00AC   1C06           00335         BTFSS PORTB,0
+00AD   2???           00336         GOTO SAVE_VALUE
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00AE   0AA3           00337         INCF TECLA,F
+00AF                  00338 CHECK_FIL_1
+00AF   1C86           00339         BTFSS PORTB,1
+00B0   2???           00340         GOTO SAVE_VALUE
+00B1   0AA3           00341         INCF TECLA,F
+00B2                  00342 CHECK_FIL_2
+00B2   1D06           00343         BTFSS PORTB,2
+00B3   2???           00344         GOTO SAVE_VALUE
+00B4   0AA3           00345         INCF TECLA,F
+00B5                  00346 CHECK_FIL_3
+00B5   1D86           00347         BTFSS PORTB,3
+00B6   2???           00348         GOTO SAVE_VALUE
+00B7   0AA3           00349         INCF TECLA,F
+00B8                  00350 CHECK_FIL_4
+00B8   1E06           00351         BTFSS PORTB,4
+00B9   2???           00352         GOTO SAVE_VALUE
+00BA   0AA3           00353         INCF TECLA,F    
+00BB                  00354 END_FIL
+00BB   0824           00355         MOVF    LAST_TECLA,W    ; VALOR DE LA VARIABLE ES 25
+00BC   0223           00356         SUBWF   TECLA,W         ; RESTA 26 MENOS LA TECLA PULSADA
+00BD   1803           00357         BTFSC   STATUS,C        ; SI X < 25 NO SE PULSO LA ULTIMA TECLA
+00BE   2???           00358         GOTO    TECLA_NO_PULSE
+Message[305]: Using default destination of 1 (file).
+00BF   0AC0           00359         INCF    ACTVSW  
+00C0   0840           00360         MOVF    ACTVSW,W
+00C1   2???           00361         CALL    ROTACIONPTOC 
+00C2   2???           00362         GOTO CHECK_ROW
+00C3                  00363 TECLA_NO_PULSE
+00C3   2???           00364         GOTO Teclado_LeeOrdenTecla
+                      00365 ;==============================================================================
+00C4                  00366 SAVE_VALUE
+00C4   0823           00367         MOVF TECLA,W        ;Variable TECLA contiene el valor pulsado, es el
+                      00368                             ;valor a encender en los bombillos de respuesta
+00C5   00A5           00369         MOVWF RESPUESTA     ;se respalda W en respuesta para operaciones aritmeticas
+00C6   2???           00370         CALL ESCLAVO
+00C7   2???           00371         call rettkla
+                      00372         
+00C8                  00373 VALIDATE_ANSWER 
+                      00374         
+00C8   2???           00375         CALL OFFSETR    
+00C9   2???           00376         CALL RESPUESTAS_1   ; SE DESPLAZA EN LA TABLA Y SE TRAE EL EN DATO
+Message[305]: Using default destination of 1 (file).
+00CA   02A5           00377         SUBWF RESPUESTA     ;
+00CB   1903           00378         BTFSC STATUS,Z
+00CC   2???           00379         goto tklbuena       ;RETORNA SI LA RESPUESTA ES ERRADA y espera la
+00CD   2???           00380         GOTO tklmala        ;correcta x tiempo
+                      00381                              
+                      00382   
+00CE                  00383 tklbuena
+00CE   0AC6           00384         INCF  PREUNO,F
+00CF   0846           00385         MOVF PREUNO,W
+00D0   3C05           00386         SUBLW  .5
+00D1   1D03           00387         BTFSS STATUS,Z
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00D2   2???           00388         GOTO SIGCURSO
+00D3   01C6           00389         CLRF PREUNO
+00D4   3005           00390         MOVLW .5
+Message[305]: Using default destination of 1 (file).
+00D5   07C5           00391         ADDWF ANIUNO
+                      00392         
+00D6                  00393 SIGCURSO        
+00D6   0186           00394         CLRF  PORTB      
+00D7   2???           00395         CALL TONOBUENO
+00D8   0823           00396         MOVF TECLA,W
+00D9   2???           00397         CALL ESCLAVO
+00DA   2???           00398         call rettkla
+                      00399 
+                      00400         
+00DB   0008           00401         return
+                      00402         
+00DC                  00403 rettkla 
+                      00404         BANK0              
+00DC   1283               M         BCF STATUS,5
+00DD   1303               M         BCF STATUS,6
+00DE   30FF           00405         MOVLW .255 ;80
+00DF   00C1           00406         MOVWF CONTA_3
+00E0   2???           00407         CALL RETARDO_20MS
+00E1   0000           00408         NOP
+00E2   0BC1           00409         DECFSZ CONTA_3,F
+00E3   2???           00410         GOTO $-.3
+00E4   0008           00411         RETURN
+00E5                  00412 tklmala
+00E5   2???           00413         CALL TONOERROR
+00E6   2???           00414         call rettkla
+                      00415 
+                      00416         
+00E7   2???           00417         GOTO Teclado_LeeOrdenTecla
+                      00418         
+                      00419 ;===============================================================================            
+                      00420 ;                       inicia parametros para el programa      
+00E8                  00421 CONFIGURA
+                      00422 ;===============================================================================            
+                      00423         DigPort             ;inicializa los puertos en digital 
+                          M         BANK3
+00E8   1683               M         BSF STATUS,5
+00E9   1703               M         BSF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00EA   0188               M         CLRF ANSEL
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00EB   0189               M         CLRF ANSELH
+                      00424         BANK1
+00EC   1683               M         BSF STATUS,5
+00ED   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00EE   0185           00425         CLRF TRISA          ;PUERTO A SALIDA BOMBILLOS ANIMAL
+00EF   309F           00426         MOVLW B'10011111'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00F0   0086           00427         MOVWF TRISB         ;Puerto B ENTRADA PARA EL TECLADO y Boton de inicio
+00F1   3018           00428         MOVLW B'00011000'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00F2   0087           00429         MOVWF TRISC
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00F3   0188           00430         CLRF TRISD          ;PUERTO D SALIDA BOMBILLOS PREGUNTA
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00F4   0189           00431         CLRF TRISE
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00F5   1796           00432         BSF     IOCB,7  
+                      00433         ClSPort             ; MACRO DE LIMPIAR LOS PUERTOS
+                          M         BANK0
+00F6   1283               M         BCF STATUS,5
+00F7   1303               M         BCF STATUS,6
+00F8   0187               M         CLRF PORTC
+00F9   0186               M         CLRF PORTB
+00FA   0185               M         CLRF PORTA
+00FB   0188               M         CLRF PORTD
+00FC   3004               M         MOVLW 0X04
+00FD   0089               M         MOVWF PORTE
+00FE   2???           00434         CALL I2C_INIT_MASTER
+                      00435         
+                      00436         BANK0
+00FF   1283               M         BCF STATUS,5
+0100   1303               M         BCF STATUS,6
+0101   3001           00437         MOVLW .1
+0102   00B0           00438         MOVWF ANIMALES
+0103   00B1           00439         MOVWF PREGUNTA
+0104   00B4           00440         MOVWF PUERTOD
+0105   00B5           00441         MOVWF CONTAFIL  
+0106   00B6           00442         MOVWF CONTACOL
+                      00443         
+                      00444         
+0107   3019           00445         MOVLW .25
+0108   00B3           00446         MOVWF CONTPRGTA
+0109   0080           00447         MOVWF DataOutput
+                      00448         
+010A   3019           00449         MOVLW .25
+010B   00A4           00450         MOVWF LAST_TECLA
+                      00451         
+010C   3000           00452         MOVLW 00H
+010D   00A7           00453         MOVWF CONT_WIN
+010E   00C5           00454         MOVWF ANIUNO     
+010F   00C6           00455         MOVWF PREUNO
+0110   00C4           00456         MOVWF GUSAS
+                      00457         
+0111   30FA           00458         MOVLW B'11111010'       ;ACTIVA BIT EN CERO PARA ROTAR EN TECLADO
+0112   00B7           00459         MOVWF ACTVTKLA
+                      00460                    ; call rettkla
+                      00461 ;============================================================================== 
+0113                  00462 KeyRelease
+                      00463 ;============================================================================== 
+                      00464         BANK1
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0113   1683               M         BSF STATUS,5
+0114   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0115   1796           00465         BSF     IOCB,7              ;ACTIVA INT DE CAMBIO DE ESTADO Bit 7 Puerto B
+                      00466         BANK0
+0116   1283               M         BCF STATUS,5
+0117   1303               M         BCF STATUS,6
+0118   0186           00467         CLRF    PORTB
+0119   118B           00468         bcf     INTCON,RBIE         ;disable mask
+011A   178B           00469         bsf     INTCON,GIE
+011B   0806           00470         movf    PORTB,W             ;read port
+011C   100B           00471         bcf     INTCON,RBIF         ;clear flag
+011D   158B           00472         bsf     INTCON,RBIE         ;enable mask
+011E   0009           00473         retfie          
+                      00474 ;===============================================================================
+011F                  00475 ESCLAVO 
+                      00476 ;===============================================================================        
+011F   30C0           00477         MOVLW 0xC0              ;DIRECCIÓN DEL ESCLAVO A ENVIAR EL DATO
+0120   2???           00478         CALL BYTE_WRITE
+0121   0823           00479         MOVF TECLA,W            ;LW 0X30
+0122   2???           00480         CALL BYTE_WRITE
+0123   2???           00481         CALL BSTOP
+0124   0008           00482         RETURN
+                      00483 ;===============================================================================
+                      00484 ;                           RETARDO DE 20MS
+                      00485 ;===============================================================================
+0125                  00486 RETARDO_20MS
+                      00487 ;       RETURN       ; HABILITADO SOLO PARA DEBUG
+0125   3014           00488         MOVLW .20
+0126   00A0           00489         MOVWF CONTA_2
+0127   30FA           00490         MOVLW .250
+0128   00A1           00491         MOVWF CONTA_1
+0129   0000           00492         NOP
+012A   0BA1           00493         DECFSZ CONTA_1,F
+012B   2???           00494         GOTO $-.2
+012C   0BA0           00495         DECFSZ CONTA_2,F
+012D   2???           00496         GOTO $-.6
+012E   0008           00497         RETURN   
+                      00498 ;===============================================================================        
+012F                  00499 gusanos 
+                      00500 ;===============================================================================        
+012F   0844           00501         MOVF GUSAS,W
+0130   3C00           00502         SUBLW 00
+0131   1D03           00503         BTFSS STATUS,Z
+0132   2???           00504         GOTO GUSA1
+0133   3030           00505         MOVLW 30H
+0134   0080           00506         MOVWF DataOutput
+0135   00A3           00507         MOVWF TECLA
+0136   2???           00508         CALL ESCLAVO
+0137   2???           00509         CALL NECESARIO
+0138   2???           00510         GOTO GUSS
+0139                  00511 GUSA1
+0139   0844           00512         MOVF GUSAS,W
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+013A   3C01           00513         SUBLW 01
+013B   1D03           00514         BTFSS STATUS,Z
+013C   2???           00515         GOTO GUSA2
+013D   3031           00516         MOVLW 31H
+013E   0080           00517         MOVWF DataOutput
+013F   00A3           00518         MOVWF TECLA
+0140   2???           00519         CALL ESCLAVO
+0141   2???           00520         CALL NECESARIO
+0142   2???           00521         GOTO GUSS
+0143                  00522 GUSA2
+0143   0844           00523         MOVF GUSAS,W
+0144   3C02           00524         SUBLW 02
+0145   1D03           00525         BTFSS STATUS,Z
+0146   2???           00526         GOTO GUSA2
+0147   3032           00527         MOVLW 32H
+0148   0080           00528         MOVWF DataOutput
+0149   00A3           00529         MOVWF TECLA
+014A   2???           00530         CALL ESCLAVO
+014B   2???           00531         CALL NECESARIO
+                      00532 
+014C   0AC4           00533 GUSS    INCF GUSAS,F
+014D   0844           00534         MOVF GUSAS,W
+014E   3C03           00535         SUBLW 03
+014F   1D03           00536         BTFSS STATUS,Z
+0150   2???           00537         GOTO ESTO
+0151   01C4           00538         CLRF GUSAS
+0152   0009           00539 ESTO    RETFIE  
+                      00540         
+                      00541         
+                      00542         
+0153                  00543 NECESARIO
+0153   2???           00544         call rettkla
+0154   2???           00545         call rettkla
+0155   2???           00546         call rettkla
+0156   2???           00547         call rettkla
+0157   2???           00548         call rettkla
+0158   2???           00549         call rettkla
+0159   2???           00550         call rettkla
+015A   2???           00551         call rettkla
+015B   2???           00552         call rettkla
+015C   2???           00553         call rettkla    
+015D   0008           00554         RETURN
+                      00555         
+                      00556 ;===============================================================================        
+                      00557         #include "I2C.INC"
+                      00001 
+Message[313]: CBLOCK constants will start with a value of 0.
+                      00002         CBLOCK
+  00000000            00003         DataOutput
+                      00004         ENDC
+                      00005         
+                      00006 ;===============================================================================
+                      00007 ;                       CONFIGURA EL PIC COMO MAESTRO I2C 
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00008 ;===============================================================================
+015E                  00009 I2C_INIT_MASTER
+                      00010         BANK1
+015E   1683               M         BSF STATUS,5
+015F   1303               M         BCF STATUS,6
+                      00011 
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0160   1587           00012         BSF TRISC,3         ;SDA COMO ENTRADA
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0161   1607           00013         BSF TRISC,4         ;SCL COMO ENTRADA
+                      00014             
+0162   3009           00015         MOVLW 0x09          ;(FOSC/(4*BAUD_RATE))-1 -> (4000000/(4*100000))-1   
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0163   0093           00016         MOVWF SSPADD        ;BAUD_RATE 100 Khz para 4Mhz
+                      00017         
+0164   3080           00018         MOVLW B'10000000'   
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0165   0094           00019         MOVWF SSPSTAT       ;DESHABILITA CONTROL DE VARIACIONES PARA VELOCIDAD ESTÁNDAR (100kHz).
+                      00020         
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0166   0191           00021         CLRF SSPCON2        ;CONDICIONES INICIALES EN CERO, LLAMADA GENERAL DESHABILITADA
+                      00022         
+                      00023         BANK0
+0167   1283               M         BCF STATUS,5
+0168   1303               M         BCF STATUS,6
+0169   3028           00024         MOVLW B'00101000'   
+016A   0094           00025         MOVWF SSPCON        ;SELECCIONA Y HABILITA I2C EN MODO MAESTRO
+                      00026         
+016B   118C           00027         BCF PIR1,SSPIF      
+016C   118C           00028         BCF PIR1,BCLIF
+                      00029         
+016D   0008           00030         RETURN
+                      00031 ;===============================================================================
+                      00032 ;                       CONFIGURA EL PIC COMO ESCLAVO I2C 
+                      00033 ;===============================================================================
+016E                  00034 I2C_INIT_SLAVE
+                      00035         BANK1
+016E   1683               M         BSF STATUS,5
+016F   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0170   1587           00036         BSF TRISC,3
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0171   1607           00037         BSF TRISC,4
+                      00038         
+                      00039         ;MOVLW B'11000000'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0172   0093           00040         MOVWF SSPADD        ;SE CARGA LA DIRECCIÓN DEL ESCLAVO EN W AL HACER EL LLAMADO
+                      00041         
+0173   3080           00042         MOVLW B'10000000'   ;DESHABILITA CONTROL DE VARIACIONES PARA VELOCIDAD ESTÁNDAR (100kHz).
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0174   0094           00043         MOVWF SSPSTAT
+                      00044         
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0175   0191           00045         CLRF SSPCON2        ;CONDICIONES INICIALES EN CERO, LLAMADA GENERAL DESHABILITADA
+                      00046         
+                      00047         BANK0
+0176   1283               M         BCF STATUS,5
+0177   1303               M         BCF STATUS,6
+0178   3026           00048         MOVLW B'00100110'
+0179   0094           00049         MOVWF SSPCON        ;SELECCIONA Y HABILITA I2C EN MODO ESCLAVO CON DIRECCIÓN DE 7 BITS
+                      00050         
+017A   118C           00051         BCF PIR1,SSPIF
+017B   118C           00052         BCF PIR1,BCLIF
+                      00053                 
+017C   0008           00054         RETURN
+                      00055 ;===============================================================================
+                      00056 ;                       INICIA LA COMUNICACIÓN I2C
+                      00057 ;===============================================================================        
+017D                  00058 I2C_START_MASTER
+                      00059         BANK0
+017D   1283               M         BCF STATUS,5
+017E   1303               M         BCF STATUS,6
+017F   118C           00060         BCF PIR1,SSPIF
+                      00061         BANK1
+0180   1683               M         BSF STATUS,5
+0181   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0182   1411           00062         BSF SSPCON2,SEN     ;ENVÍA LA CONDICIÓN DE INICIO
+                      00063         BANK0
+0183   1283               M         BCF STATUS,5
+0184   1303               M         BCF STATUS,6
+0185                  00064 i2c_start_wait
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0185   1811           00065         BTFSC SSPCON2,SEN   ;TERMINÓ DE ESTABLECER LA CONDICIÓN DE INICIO?
+0186   2???           00066         GOTO i2c_start_wait
+                      00067         
+0187   0008           00068         RETURN
+                      00069 ;===============================================================================
+                      00070 ;                       TRANSMITE MENSAJE I2C
+                      00071 ;===============================================================================
+0188                  00072 TX
+                      00073         BANK0
+0188   1283               M         BCF STATUS,5
+0189   1303               M         BCF STATUS,6
+018A   118C           00074         BCF PIR1,SSPIF
+                      00075         
+018B   0800           00076         MOVF DataOutput,W   
+018C   0093           00077         MOVWF SSPBUF            ;CARGA MENSAJE PARA SER ENVIADO
+                      00078         
+018D                  00079 tx_wait
+018D   1D8C           00080         BTFSS PIR1,SSPIF        ;YA SE ENVÍO EL MENSAJE?
+018E   2???           00081         GOTO tx_wait        
+                      00082         
+                      00083         BANK1
+018F   1683               M         BSF STATUS,5
+0190   1303               M         BCF STATUS,6
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0191   1B11           00084         BTFSC SSPCON2,ACKSTAT   ;FUE RECONOCIDO EL ESCLAVO?
+0192   2???           00085         GOTO $-1
+                      00086         
+0193   0008           00087         RETURN
+                      00088 
+                      00089 ;===============================================================================
+                      00090 ;           ESTABLECE LA CONDICIÓN DE PARADA DE LA TRANSMISIÓN
+                      00091 ;===============================================================================
+0194                  00092 BSTOP
+                      00093         BANK0
+0194   1283               M         BCF STATUS,5
+0195   1303               M         BCF STATUS,6
+0196   118C           00094         BCF PIR1,SSPIF
+                      00095         BANK1
+0197   1683               M         BSF STATUS,5
+0198   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0199   1511           00096         BSF SSPCON2,PEN
+                      00097         BANK0
+019A   1283               M         BCF STATUS,5
+019B   1303               M         BCF STATUS,6
+019C                  00098 bstop_wait
+019C   1D8C           00099         BTFSS PIR1,SSPIF
+019D   2???           00100         GOTO bstop_wait
+                      00101         
+019E   0008           00102         RETURN
+                      00103 
+                      00104 ;===============================================================================
+                      00105 ;                       ENVÍA UN BYTE POR EL BUS I2C
+                      00106 ;===============================================================================
+019F                  00107 BYTE_WRITE
+019F   2???           00108         CALL I2C_START_MASTER   ;INICIA LA COMUNIACIÓN
+                      00109         BANK0
+01A0   1283               M         BCF STATUS,5
+01A1   1303               M         BCF STATUS,6
+01A2   0080           00110         MOVWF DataOutput        ;DATO CARGADO EN W ANTES DE LLAMAR LA RUTINA
+01A3   2???           00111         CALL TX                 ;TRANSMITE
+                      00112         BANK0
+01A4   1283               M         BCF STATUS,5
+01A5   1303               M         BCF STATUS,6
+01A6   0008           00113         RETURN
+                      00114         
+                      00115 ;=============================================================================
+01A7                  00116 TONOERROR
+                      00117         ; GENERA TONO DE ERROR
+                      00118         ; VUELVE A ESPERAR PULZAR TECLAS CORRECTA
+                      00119 ;==============================================================================
+                      00120 ;Se generan 3 tonos 
+                      00121 ;Con 4MHz de frequencia la frecuencia mínima de PWM es de 244 Hz, que se ubica 
+                      00122 ;entre las notas musicales de la octava 4 (ni an graves ni tan agudas)
+                      00123 ;PWM en modo Simple Output solo es posible en el pin P1A (RC2)
+                      00124 ;==============================================================================
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01A7                  00125 INIT_FRQ
+                      00126         BANK1
+01A7   1683               M         BSF STATUS,5
+01A8   1303               M         BCF STATUS,6
+01A9   30D4           00127         MOVLW .212 
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+01AA   0092           00128         MOVWF PR2           ;CARGA LA FRECUENCIA INICIAL DEL PWM (212 HZ) NOTA RE(4)
+01AB   2???           00129         CALL CONFIG_PWM     ;PARAMETROS PARA EL MODO PWM
+01AC   2???           00130         CALL INIT_PWM       ;INICIA EL PWM
+01AD   30FF           00131         MOVLW .255          
+01AE   2???           00132         CALL RETARDO_NOTAS_20MS
+01AF   30E0           00133         MOVLW .224          
+01B0   2???           00134         CALL LOAD_FREQ      ;NOTA DO#(4)
+01B1   30FF           00135         MOVLW .255
+01B2   2???           00136         CALL RETARDO_NOTAS_20MS   
+01B3   30EE           00137         MOVLW .238          
+01B4   2???           00138         CALL LOAD_FREQ      ;NOTA DO(4)
+01B5   30FF           00139         MOVLW .255
+01B6   2???           00140         CALL RETARDO_NOTAS_20MS
+01B7   30FF           00141         MOVLW .255
+01B8   2???           00142         CALL RETARDO_NOTAS_20MS
+01B9   2???           00143         CALL DISABLE_PWM
+01BA   0008           00144         RETURN
+                      00145 ;==============================================================================
+                      00146 ;                       CONFIGURA EL MODO PWM
+                      00147 ;==============================================================================
+01BB                  00148 CONFIG_PWM
+                      00149         BANK1
+01BB   1683               M         BSF STATUS,5
+01BC   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+01BD   1507           00150         BSF TRISC,2         ;PONE EL PIN P1A COMO ENTRADA PARA MANTENER NACTIVO EL PWM
+                      00151         BANK0
+01BE   1283               M         BCF STATUS,5
+01BF   1303               M         BCF STATUS,6
+01C0   303C           00152         MOVLW B'00111100'   
+01C1   0097           00153         MOVWF CCP1CON       ;MODO PWM CON P1A,P1B,P1C,P1D ACTIVOS EN ALTO
+01C2   303F           00154         MOVLW B'00111111'
+01C3   0095           00155         MOVWF CCPR1L        ;DUTY CYCLE AL 25%(?)
+01C4   108C           00156         BCF PIR1,TMR2IF     ;SE LIMPIA BANDERA DEL TIMER2
+01C5   3003           00157         MOVLW B'00000011'
+01C6   0092           00158         MOVWF T2CON         ;PREESCALADOR A 16
+01C7   0008           00159         RETURN
+                      00160 ;==============================================================================
+                      00161 ;                       INICIA EL PWM
+                      00162 ;==============================================================================
+01C8                  00163 INIT_PWM
+                      00164         BANK1
+01C8   1683               M         BSF STATUS,5
+01C9   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+01CA   1107           00165         BCF TRISC,2         ;PIN PIA COMO SALIDA PARA EL PWM
+01CB   1512           00166         BSF T2CON,TMR2ON    ;SE INICIA EL TIMER
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01CC   0008           00167         RETURN
+                      00168 ;==============================================================================
+                      00169 ;                       DESACTIVA EL PWM
+                      00170 ;==============================================================================
+01CD                  00171 DISABLE_PWM
+                      00172         BANK1
+01CD   1683               M         BSF STATUS,5
+01CE   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+01CF   1507           00173         BSF TRISC,2
+01D0   0008           00174         RETURN 
+                      00175 ;==============================================================================
+                      00176 ;               CARGA UN VALOR EN PR2 PARA EL CAMBIO DE FREQ
+                      00177 ;==============================================================================
+01D1                  00178 LOAD_FREQ
+                      00179         BANK1
+01D1   1683               M         BSF STATUS,5
+01D2   1303               M         BCF STATUS,6
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+01D3   0092           00180         MOVWF PR2
+01D4   0008           00181         RETURN
+                      00182 
+01D5                  00183 RETARDO_NOTAS_20MS
+                      00184         BANK0
+01D5   1283               M         BCF STATUS,5
+01D6   1303               M         BCF STATUS,6
+01D7   00A0           00185         MOVWF CONTA_2
+01D8   30FA           00186         MOVLW .250
+01D9   00A1           00187         MOVWF CONTA_1
+01DA   0000           00188         NOP
+01DB   0BA1           00189         DECFSZ CONTA_1,F
+01DC   2???           00190         GOTO $-.2
+01DD   0BA0           00191         DECFSZ CONTA_2,F
+01DE   2???           00192         GOTO $-.6
+01DF   0008           00193         RETURN
+                      00194 ;==============================================================================
+                      00195 
+                      00196 ;============================================================================== 
+01E0                  00197 TONOBUENO
+                      00198         BANK1
+01E0   1683               M         BSF STATUS,5
+01E1   1303               M         BCF STATUS,6
+01E2   30EE           00199         MOVLW .238 
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+01E3   0092           00200         MOVWF PR2           ;CARGA LA FRECUENCIA INICIAL DEL PWM (212 HZ) NOTA DO(4)
+01E4   2???           00201         CALL CONFIG_PWM     ;PARAMETROS PARA EL MODO PWM
+01E5   2???           00202         CALL INIT_PWM       ;INICIA EL PWM
+01E6   30FF           00203         MOVLW .255          
+01E7   2???           00204         CALL RETARDO_NOTAS_20MS
+01E8   30D4           00205         MOVLW .212          
+01E9   2???           00206         CALL LOAD_FREQ      ;NOTA RE (4)
+01EA   30FF           00207         MOVLW .255
+01EB   2???           00208         CALL RETARDO_NOTAS_20MS   
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01EC   30BC           00209         MOVLW .188          
+01ED   2???           00210         CALL LOAD_FREQ      ;NOTA MI (4)
+01EE   30FF           00211         MOVLW .255
+01EF   2???           00212         CALL RETARDO_NOTAS_20MS
+01F0   3096           00213         MOVLW .150
+01F1   2???           00214         CALL RETARDO_NOTAS_20MS
+01F2   30EE           00215         MOVLW .238          
+01F3   2???           00216         CALL LOAD_FREQ      ;NOTA DO (4)
+01F4   3050           00217         MOVLW .80
+01F5   2???           00218         CALL RETARDO_NOTAS_20MS
+01F6   30BC           00219         MOVLW .188          
+01F7   2???           00220         CALL LOAD_FREQ      ;NOTA MI(4)
+01F8   30FF           00221         MOVLW .255
+01F9   2???           00222         CALL RETARDO_NOTAS_20MS
+01FA   3096           00223         MOVLW .150
+01FB   2???           00224         CALL RETARDO_NOTAS_20MS
+01FC   2???           00225         CALL DISABLE_PWM
+01FD   0008           00226         RETURN
+                      00558 ;===============================================================================        
+20F4 3EFF             00559         END
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 19
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ABDEN                             00000000
+ABDOVF                            00000007
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ACTVSW                            00000040
+ACTVTKLA                          00000037
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ANIMALES                          00000030
+ANIUNO                            00000045
+ANS0                              00000000
+ANS1                              00000001
+ANS10                             00000002
+ANS11                             00000003
+ANS12                             00000004
+ANS13                             00000005
+ANS2                              00000002
+ANS3                              00000003
+ANS4                              00000004
+ANS5                              00000005
+ANS6                              00000006
+ANS7                              00000007
+ANS8                              00000000
+ANS9                              00000001
+ANSEL                             00000188
+ANSELH                            00000189
+BANK0                             
+BANK1                             
+BANK2                             
+BANK3                             
+BAUDCTL                           00000187
+BCLIE                             00000003
+BCLIF                             00000003
+BF                                00000000
+BIT                               00000022
+BRG0                              00000000
+BRG1                              00000001
+BRG10                             00000002
+BRG11                             00000003
+BRG12                             00000004
+BRG13                             00000005
+BRG14                             00000006
+BRG15                             00000007
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 20
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+BRG16                             00000003
+BRG2                              00000002
+BRG3                              00000003
+BRG4                              00000004
+BRG5                              00000005
+BRG6                              00000006
+BRG7                              00000007
+BRG8                              00000000
+BRG9                              00000001
+BRGH                              00000002
+BSTOP                             00000194
+BYTE_WRITE                        0000019F
+C                                 00000000
+C1CH0                             00000000
+C1CH1                             00000001
+C1IE                              00000005
+C1IF                              00000005
+C1OE                              00000005
+C1ON                              00000007
+C1OUT                             00000006
+C1POL                             00000004
+C1R                               00000002
+C1RSEL                            00000005
+C1SEN                             00000005
+C2CH0                             00000000
+C2CH1                             00000001
+C2IE                              00000006
+C2IF                              00000006
+C2OE                              00000005
+C2ON                              00000007
+C2OUT                             00000006
+C2POL                             00000004
+C2R                               00000002
+C2REN                             00000004
+C2RSEL                            00000004
+C2SYNC                            00000000
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           0000001D
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 21
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CCP2Y                             00000004
+CCPR1                             00000015
+CCPR1H                            00000016
+CCPR1L                            00000015
+CCPR2                             0000001B
+CCPR2H                            0000001C
+CCPR2L                            0000001B
+CHECK_FIL_0                       000000AC
+CHECK_FIL_1                       000000AF
+CHECK_FIL_2                       000000B2
+CHECK_FIL_3                       000000B5
+CHECK_FIL_4                       000000B8
+CHECK_ROW                         000000AB
+CHS0                              00000002
+CHS1                              00000003
+CHS2                              00000004
+CHS3                              00000005
+CKE                               00000006
+CKP                               00000004
+CM1CON0                           00000107
+CM2CON0                           00000108
+CM2CON1                           00000109
+CONFIGURA                         000000E8
+CONFIG_PWM                        000001BB
+CONTACOL                          00000036
+CONTAFIL                          00000035
+CONTA_1                           00000021
+CONTA_2                           00000020
+CONTA_3                           00000041
+CONTPRGTA                         00000033
+CONT_WIN                          00000027
+CONVERT_HEX                       00000019
+CORRECTO                          00000026
+CREN                              00000004
+CSRC                              00000007
+ClSPort                           
+D                                 00000005
+DATA_ADDRESS                      00000005
+DATO4                             00000047
+DC                                00000001
+DC1B0                             00000004
+DC1B1                             00000005
+DC2B0                             00000004
+DC2B1                             00000005
+DISABLE_PWM                       000001CD
+D_A                               00000005
+D_NOT_A                           00000005
+DataOutput                        00000000
+DigPort                           
+ECCPAS                            0000009C
+ECCPAS0                           00000004
+ECCPAS1                           00000005
+ECCPAS2                           00000006
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 22
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ECCPASE                           00000007
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDAT                             0000010C
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+ENCENDER                          0000008B
+END_CONVERT_HEX                   00000033
+END_FIL                           000000BB
+END_RESPUESTAS_1                  0000004D
+END_ROTACIONPTOC                  00000019
+ESCLAVO                           0000011F
+ESTO                              00000152
+F                                 00000001
+FERR                              00000002
+FILNUM                            00000039
+FSR                               00000004
+FVREN                             00000000
+GCEN                              00000007
+GIE                               00000007
+GO                                00000001
+GO_DONE                           00000001
+GO_NOT_DONE                       00000001
+GUSA1                             00000139
+GUSA2                             00000143
+GUSAS                             00000044
+GUSS                              0000014C
+HTS                               00000002
+I2C_DATA                          00000005
+I2C_INIT_MASTER                   0000015E
+I2C_INIT_SLAVE                    0000016E
+I2C_READ                          00000002
+I2C_START                         00000003
+I2C_START_MASTER                  0000017D
+I2C_STOP                          00000004
+INDF                              00000000
+INICIA                            00000066
+INIT_FRQ                          000001A7
+INIT_PWM                          000001C8
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IOCB                              00000096
+IOCB0                             00000000
+IOCB1                             00000001
+IOCB2                             00000002
+IOCB3                             00000003
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 23
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+IOCB4                             00000004
+IOCB5                             00000005
+IOCB6                             00000006
+IOCB7                             00000007
+IRCF0                             00000004
+IRCF1                             00000005
+IRCF2                             00000006
+IRP                               00000007
+KeyRelease                        00000113
+LAST_TECLA                        00000024
+LOAD_FREQ                         000001D1
+LTS                               00000001
+MC1OUT                            00000007
+MC2OUT                            00000006
+MSK                               00000093
+MSK0                              00000000
+MSK1                              00000001
+MSK2                              00000002
+MSK3                              00000003
+MSK4                              00000004
+MSK5                              00000005
+MSK6                              00000006
+MSK7                              00000007
+NECESARIO                         00000153
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000001
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+NVECES                            00000038
+OERR                              00000001
+OFFSETR                           00000076
+OPTION_REG                        00000081
+OSCCON                            0000008F
+OSCTUNE                           00000090
+OSFIE                             00000007
+OSFIF                             00000007
+OSTS                              00000003
+P                                 00000004
+P1M0                              00000006
+P1M1                              00000007
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 24
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PDC0                              00000000
+PDC1                              00000001
+PDC2                              00000002
+PDC3                              00000003
+PDC4                              00000004
+PDC5                              00000005
+PDC6                              00000006
+PEIE                              00000006
+PEN                               00000002
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PORTD                             00000008
+PORTE                             00000009
+PR2                               00000092
+PREGTFIL                          00000042
+PREGUNTA                          00000031
+PREND_RESPU                       00000091
+PREUNO                            00000046
+PROGRAM                           00000005
+PROXIMO                           00000073
+PRSEN                             00000007
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+PSSAC0                            00000002
+PSSAC1                            00000003
+PSSBD0                            00000000
+PSSBD1                            00000001
+PSTRCON                           0000009D
+PUERTOD                           00000034
+PULSR                             00000002
+PULSS                             00000003
+PWM1CON                           0000009B
+R                                 00000002
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RA6                               00000006
+RA7                               00000007
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 25
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RC0                               00000000
+RC1                               00000001
+RC2                               00000002
+RC3                               00000003
+RC4                               00000004
+RC5                               00000005
+RC6                               00000006
+RC7                               00000007
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCEN                              00000003
+RCIDL                             00000006
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+RD0                               00000000
+RD1                               00000001
+RD2                               00000002
+RD3                               00000003
+RD4                               00000004
+RD5                               00000005
+RD6                               00000006
+RD7                               00000007
+RE0                               00000000
+RE1                               00000001
+RE2                               00000002
+RE3                               00000003
+READ_HEX                          00000098
+READ_HEX_END                      0000009C
+READ_WRITE                        00000002
+RESPUESTA                         00000025
+RESPUESTAS_1                      00000033
+RETARDO_20MS                      00000125
+RETARDO_NOTAS_20MS                000001D5
+ROTACIONPTOC                      00000013
+RP0                               00000005
+RP1                               00000006
+RSEN                              00000001
+RX9                               00000006
+RX9D                              00000000
+R_NOT_W                           00000002
+R_W                               00000002
+S                                 00000003
+SAVE_VALUE                        000000C4
+SBOREN                            00000004
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 26
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+SCKP                              00000004
+SCS                               00000000
+SEN                               00000000
+SENDB                             00000003
+SIGCURSO                          000000D6
+SISTPREG                          00000070
+SMP                               00000007
+SPBRG                             00000099
+SPBRGH                            0000009A
+SPEN                              00000007
+SR0                               00000006
+SR1                               00000007
+SRCON                             00000185
+SREN                              00000005
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+SSPCON2                           00000091
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPMSK                            00000093
+SSPOV                             00000006
+SSPSTAT                           00000094
+STATUS                            00000003
+STRA                              00000000
+STRB                              00000001
+STRC                              00000002
+STRD                              00000003
+STRSYNC                           00000004
+SWDTEN                            00000000
+SYNC                              00000004
+ServiceInterrupt                  00000007
+ServiceWakup                      0000000A
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1GINV                            00000007
+T1GIV                             00000007
+T1GSS                             00000001
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 27
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+T2CON                             00000012
+TECLA                             00000023
+TECLA_NO_PULSE                    000000C3
+TEMP                              00000032
+TEMP0                             00000028
+TEMP1                             00000029
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1GE                            00000006
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TONOBUENO                         000001E0
+TONOERROR                         000001A7
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISA6                            00000006
+TRISA7                            00000007
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRISC                             00000087
+TRISC0                            00000000
+TRISC1                            00000001
+TRISC2                            00000002
+TRISC3                            00000003
+TRISC4                            00000004
+TRISC5                            00000005
+TRISC6                            00000006
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 28
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TRISC7                            00000007
+TRISD                             00000088
+TRISD0                            00000000
+TRISD1                            00000001
+TRISD2                            00000002
+TRISD3                            00000003
+TRISD4                            00000004
+TRISD5                            00000005
+TRISD6                            00000006
+TRISD7                            00000007
+TRISE                             00000089
+TRISE0                            00000000
+TRISE1                            00000001
+TRISE2                            00000002
+TRISE3                            00000003
+TRMT                              00000001
+TUN0                              00000000
+TUN1                              00000001
+TUN2                              00000002
+TUN3                              00000003
+TUN4                              00000004
+TX                                00000188
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+Teclado_EsperaDejePulsar          0000009D
+Teclado_LeeOrdenTecla             000000A4
+Teclado_SigueEsperando            0000009D
+UA                                00000001
+ULPWUE                            00000005
+ULPWUIE                           00000002
+ULPWUIF                           00000002
+VALIDATE_ANSWER                   000000C8
+VCFG0                             00000004
+VCFG1                             00000005
+VERIFICA                          00000081
+VERIFICA1                         00000079
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             00000097
+VREN                              00000007
+VROE                              00000006
+VRR                               00000005
+VRSS                              00000004
+W                                 00000000
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 29
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+WCOL                              00000007
+WDTCON                            00000105
+WDTPS0                            00000001
+WDTPS1                            00000002
+WDTPS2                            00000003
+WDTPS3                            00000004
+WPUB                              00000095
+WPUB0                             00000000
+WPUB1                             00000001
+WPUB2                             00000002
+WPUB3                             00000003
+WPUB4                             00000004
+WPUB5                             00000005
+WPUB6                             00000006
+WPUB7                             00000007
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+WUE                               00000001
+Z                                 00000002
+_.org_1_00E3                      000000E3
+_.org_1_012B                      0000012B
+_.org_1_012D                      0000012D
+_.org_1_0192                      00000192
+_.org_1_01DC                      000001DC
+_.org_1_01DE                      000001DE
+_BOR21V                           00003EFF
+_BOR40V                           00003FFF
+_BOR4V_BOR21V                     00003EFF
+_BOR4V_BOR40V                     00003FFF
+_BOREN_NSLEEP                     00003EFF
+_BOREN_OFF                        00003CFF
+_BOREN_ON                         00003FFF
+_BOREN_SBODEN                     00003DFF
+_BOR_NSLEEP                       00003EFF
+_BOR_OFF                          00003CFF
+_BOR_ON                           00003FFF
+_BOR_SBODEN                       00003DFF
+_CONFIG1                          00002007
+_CONFIG2                          00002008
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003F7F
+_CP_OFF                           00003FFF
+_CP_ON                            00003FBF
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         00001FFF
+_DEVID1                           00002006
+_EC_OSC                           00003FFB
+_EXTRC                            00003FFF
+_EXTRCIO                          00003FFE
+_EXTRC_OSC_CLKOUT                 00003FFF
+_EXTRC_OSC_NOCLKOUT               00003FFE
+_FCMEN_OFF                        000037FF
+MPASM 5.82              JUEGO5X5_MAESTRO.ASM   11-13-2018  0:08:11         PAGE 30
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_FCMEN_ON                         00003FFF
+_FOSC_EC                          00003FFB
+_FOSC_EXTRC_CLKOUT                00003FFF
+_FOSC_EXTRC_NOCLKOUT              00003FFE
+_FOSC_HS                          00003FFA
+_FOSC_INTRC_CLKOUT                00003FFD
+_FOSC_INTRC_NOCLKOUT              00003FFC
+_FOSC_LP                          00003FF8
+_FOSC_XT                          00003FF9
+_HS_OSC                           00003FFA
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_IESO_OFF                         00003BFF
+_IESO_ON                          00003FFF
+_INTOSC                           00003FFD
+_INTOSCIO                         00003FFC
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FF8
+_LVP_OFF                          00002FFF
+_LVP_ON                           00003FFF
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FEF
+_WDTE_OFF                         00003FF7
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FF7
+_WDT_ON                           00003FFF
+_WRT_1FOURTH                      00003BFF
+_WRT_256                          00003DFF
+_WRT_HALF                         000039FF
+_WRT_OFF                          00003FFF
+_XT_OSC                           00003FF9
+__16F887                          00000001
+bstop_wait                        0000019C
+gusanos                           0000012F
+i2c_start_wait                    00000185
+rettkla                           000000DC
+temp                              00000043
+tklbuena                          000000CE
+tklmala                           000000E5
+tx_wait                           0000018D
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :    34 reported,     0 suppressed
+
+

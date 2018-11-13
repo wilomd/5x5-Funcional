@@ -1,0 +1,147 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Tue Nov 13 00:07:57 2018
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                   .org_1       code   0x000004    program   0x0003ca
+.config_2007_BUILD/DEFAULT/PRODUCTION/JUEGO5X       code   0x002007    program   0x000002
+.config_2008_BUILD/DEFAULT/PRODUCTION/JUEGO5X       code   0x002008    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x0001e8      
+                            0x002007    0x002008      
+            490 out of 8455 program addresses used, program memory utilization is 5%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    BSTOP   0x0001d6    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+               BYTE_WRITE   0x0001e1    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+             BombilloResp   0x00001d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+         END_BombilloResp   0x000037    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+         END_GusanoDiagnl   0x00006b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+          END_GusanoHrztl   0x000051    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+         END_GusanoVertcl   0x000085    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  END_INT   0x00001c    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+            END_SALIDAPTO   0x00009f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA1   0x000110    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA2   0x000117    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA3   0x000120    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA4   0x000127    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA5   0x000130    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO1   0x000139    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO2   0x000143    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO3   0x000155    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO4   0x00015e    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO5   0x000170    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO6   0x000179    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             GusanoDiagnl   0x000051    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+              GusanoHrztl   0x000037    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             GusanoVertcl   0x00006b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+              I2C_ADDRESS   0x000019    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+          I2C_INIT_MASTER   0x0001a0    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+           I2C_INIT_SLAVE   0x0001b0    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+                  I2C_INT   0x000009    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+         I2C_START_MASTER   0x0001bf    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+                   INICIO   0x00009f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                     OTRO   0x00013b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO1   0x000145    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO2   0x000156    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO3   0x000160    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO4   0x000171    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO5   0x00017b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  OTROPTB   0x0000cf    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                 OTROPTOD   0x0000df    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                 OTROPTOE   0x0000ef    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                 PROGRAMA   0x0000be    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             RETARDO_20MS   0x00018b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                SALIDAPTO   0x000085    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                       TX   0x0001ca    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+             _.org_1_0193   0x000193    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             _.org_1_0195   0x000195    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             _.org_1_019E   0x00019e    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             _.org_1_01D4   0x0001d4    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+               bstop_wait   0x0001de    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+                 cuatoSeg   0x000197    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  gusan01   0x000104    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  gusan02   0x00010a    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  gusanos   0x0000fe    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+           i2c_start_wait   0x0001c7    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+                     next   0x000138    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                   repite   0x0000ba    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                     salt   0x000004    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  tx_wait   0x0001cf    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     salt   0x000004    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  I2C_INT   0x000009    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+              I2C_ADDRESS   0x000019    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  END_INT   0x00001c    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             BombilloResp   0x00001d    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+              GusanoHrztl   0x000037    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+         END_BombilloResp   0x000037    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+          END_GusanoHrztl   0x000051    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             GusanoDiagnl   0x000051    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+         END_GusanoDiagnl   0x00006b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             GusanoVertcl   0x00006b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+         END_GusanoVertcl   0x000085    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                SALIDAPTO   0x000085    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+            END_SALIDAPTO   0x00009f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                   INICIO   0x00009f    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                   repite   0x0000ba    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                 PROGRAMA   0x0000be    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  OTROPTB   0x0000cf    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                 OTROPTOD   0x0000df    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                 OTROPTOE   0x0000ef    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  gusanos   0x0000fe    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  gusan01   0x000104    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  gusan02   0x00010a    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA1   0x000110    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA2   0x000117    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA3   0x000120    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA4   0x000127    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    FILA5   0x000130    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                     next   0x000138    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO1   0x000139    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                     OTRO   0x00013b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO2   0x000143    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO1   0x000145    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO3   0x000155    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO2   0x000156    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO4   0x00015e    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO3   0x000160    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO5   0x000170    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO4   0x000171    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                  GUSANO6   0x000179    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                    OTRO5   0x00017b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             RETARDO_20MS   0x00018b    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             _.org_1_0193   0x000193    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             _.org_1_0195   0x000195    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+                 cuatoSeg   0x000197    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+             _.org_1_019E   0x00019e    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\Juego5x5_Esclavo.asm
+          I2C_INIT_MASTER   0x0001a0    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+           I2C_INIT_SLAVE   0x0001b0    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+         I2C_START_MASTER   0x0001bf    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+           i2c_start_wait   0x0001c7    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+                       TX   0x0001ca    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+                  tx_wait   0x0001cf    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+             _.org_1_01D4   0x0001d4    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+                    BSTOP   0x0001d6    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+               bstop_wait   0x0001de    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+               BYTE_WRITE   0x0001e1    program     static C:\Users\CompaqCQ56\Documents\programa\Juego5x5\Esclavo5x5.X\I2C.INC
+
+

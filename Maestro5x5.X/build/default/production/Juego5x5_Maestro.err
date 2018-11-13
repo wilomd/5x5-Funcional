@@ -1,0 +1,34 @@
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 185 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 359 : Using default destination of 1 (file).
+Message[305] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 377 : Using default destination of 1 (file).
+Message[305] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 391 : Using default destination of 1 (file).
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 98 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 99 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 425 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 427 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 429 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 430 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 431 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 432 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\JUEGO5X5_MAESTRO.ASM 465 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[313] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 2 : CBLOCK constants will start with a value of 0.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 12 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 13 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 16 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 19 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 21 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 36 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 37 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 40 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 43 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 45 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 62 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 65 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 84 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 96 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 128 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 150 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 165 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 173 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 180 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\COMPAQCQ56\DOCUMENTS\PROGRAMA\JUEGO5X5\MAESTRO5X5.X\I2C.INC 200 : Register in operand not in bank 0.  Ensure that bank bits are correct.
